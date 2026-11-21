@@ -19,7 +19,7 @@ jobs:
           : > cdn_dump/log5.txt
           get() {
             code=$(curl -k -sS -L --max-time 25 -A "$UA" -H "Accept: */*" \
-              -D "cdn_dump/raw5/$1.hdr" -o "cdn_dump/raw5/$1.bin" -w '%{http_code} %{size_download} %{content_type}' "$2" 2>>cdn_dump/log5.txt)
+              -D "cdn_dump/raw5/$1.hdr" -o "cdn_dump/raw5/$1.bin" -w '%{http_code} %{size_download} %{content_type}' "$2" 2>>cdn_dump/log5.txt || true)
             echo "$1 $code $2" >> cdn_dump/log5.txt
           }
           get swpost   "$BASE/sw.js"
