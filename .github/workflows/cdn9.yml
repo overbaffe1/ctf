@@ -1,0 +1,36 @@
+name: cdn-dump9
+on:
+  push:
+    paths:
+      - '.github/workflows/cdn9.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  dump:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: fetch
+        run: |
+          BASE="https://c60f0a03899a4ea4.xn--80aqf1ad.xn--r1aee.xn--80afol2bmm.xn--p1acf"
+          UA="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36"
+          mkdir -p cdn_dump/probe9
+          : > cdn_dump/log9.txt
+          code=$(curl -k -sS -L --max-time 20 -A "$UA" -o cdn_dump/probe9/root.bin -D cdn_dump/probe9/root.hdr \
+            -w '%{http_code} %{size_download} %{content_type}' "$BASE/" 2>/dev/null || true)
+          echo "root $code" >> cdn_dump/log9.txt
+          code2=$(curl -k -sS -L --max-time 20 -A "$UA" -o cdn_dump/probe9/orig04.bin -D cdn_dump/probe9/orig04.hdr \
+            -w '%{http_code} %{size_download} %{content_type}' "$BASE/originals/press-04" 2>/dev/null || true)
+          echo "orig04 $code2" >> cdn_dump/log9.txt
+          echo "--- head of root:" >> cdn_dump/log9.txt
+          head -c 400 cdn_dump/probe9/root.bin >> cdn_dump/log9.txt 2>/dev/null || true
+          echo >> cdn_dump/log9.txt
+          cat cdn_dump/log9.txt
+      - name: commit
+        run: |
+          git config user.name "cdn-bot"
+          git config user.email "cdn-bot@users.noreply.github.com"
+          git add -A cdn_dump
+          git commit -m "cdn dump9 (site back?)" || echo nothing
+          git push
