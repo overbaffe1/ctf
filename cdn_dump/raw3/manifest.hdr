@@ -1,0 +1,12 @@
+HTTP/2 200 
+server: nginx/1.31.3
+date: Sat, 21 Nov 2026 11:52:24 GMT
+content-type: application/json; charset=utf-8
+content-length: 4316
+etag: "sha256-8c27acced0ae8fdf10641bd2b4aa7fea"
+x-brandguard-region: eu-media-3
+x-content-type-options: nosniff
+cache-control: public, max-age=300, stale-while-revalidate=86400
+x-brandguard-manifest: service-worker-prefetch
+strict-transport-security: max-age=31536000
+

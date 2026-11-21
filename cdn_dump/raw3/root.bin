@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BrandGuard CDN</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #182225;
+      --muted: #657174;
+      --line: #d7dddd;
+      --surface: #f7f8f6;
+      --panel: #ffffff;
+      --teal: #257766;
+      --blue: #2b6fa4;
+      --coral: #ba5747;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: var(--surface);
+    }
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      min-height: 74px;
+      padding: 0 42px;
+      border-bottom: 1px solid var(--line);
+      background: #fff;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 720;
+      letter-spacing: 0;
+    }
+    .mark {
+      display: grid;
+      place-items: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      color: #fff;
+      background: var(--ink);
+      font-size: 14px;
+    }
+    nav {
+      display: flex;
+      gap: 22px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 30px 24px 48px;
+    }
+    .toolbar {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 22px;
+    }
+    h1 {
+      margin: 0 0 8px;
+      font-size: 30px;
+      letter-spacing: 0;
+    }
+    .sub {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+    .status {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--muted);
+      font-size: 13px;
+      white-space: nowrap;
+    }
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #25a66a;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+    article {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      overflow: hidden;
+    }
+    picture, img {
+      display: block;
+      width: 100%;
+    }
+    img {
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      background: #fff;
+    }
+    .meta {
+      padding: 14px 16px 16px;
+    }
+    .meta h2 {
+      margin: 0 0 10px;
+      font-size: 17px;
+      letter-spacing: 0;
+    }
+    dl {
+      display: grid;
+      grid-template-columns: 92px 1fr;
+      gap: 6px 12px;
+      margin: 0;
+      font-size: 13px;
+    }
+    dt { color: var(--muted); }
+    dd { margin: 0; overflow-wrap: anywhere; }
+    .pill {
+      color: #15553d;
+      font-weight: 650;
+    }
+    @media (max-width: 860px) {
+      header { padding: 0 22px; }
+      nav { display: none; }
+      .toolbar { align-items: start; flex-direction: column; }
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand"><div class="mark">BG</div><span>BrandGuard CDN</span></div>
+    <nav><span>Assets</span><span>Rights</span><span>Metadata</span><span>Delivery</span></nav>
+  </header>
+  <main>
+    <section class="toolbar">
+      <div>
+        <h1>Press kit rail</h1>
+        <p class="sub">Published assets for partner launch pages and editorial placements.</p>
+      </div>
+      <div class="status"><span class="dot"></span><span>Metadata sanitizer passed</span></div>
+    </section>
+    <section class="grid" id="asset-grid"></section>
+  </main>
+  <script>
+    const fallbackAssets = [
+      ["press-04", "Northstar launch card"],
+      ["press-17", "Channel partner shield"],
+      ["press-23", "Retail media banner"]
+    ];
+
+    function card(asset) {
+      const id = asset.id;
+      const title = asset.title;
+      const original = asset.original?.url || `/originals/${id}`;
+      const variants = asset.variants || [];
+      const avif = variants.find((variant) => variant.format === "avif")?.url || `/image/${id}?w=2048&format=avif`;
+      const webp = variants.find((variant) => variant.format === "webp")?.url || `/image/${id}?w=640&format=webp`;
+      const fallback = webp || original;
+      return `
+        <article>
+          <picture>
+            <source type="image/avif" srcset="${avif} 2048w">
+            <source type="image/webp" srcset="${webp} 640w">
+            <img src="${fallback}" alt="${title}">
+          </picture>
+          <div class="meta">
+            <h2>${title}</h2>
+            <dl>
+              <dt>Asset ID</dt><dd>${id}</dd>
+              <dt>Status</dt><dd><span class="pill">published</span></dd>
+              <dt>Profile</dt><dd>${asset.metadata?.icc || "sRGB IEC61966-2.1"}</dd>
+              <dt>Original</dt><dd>${original}</dd>
+            </dl>
+          </div>
+        </article>`;
+    }
+
+    fetch("/asset-manifest.json")
+      .then((response) => response.json())
+      .then((manifest) => {
+        document.getElementById("asset-grid").innerHTML = manifest.assets.map(card).join("");
+      })
+      .catch(() => {
+        document.getElementById("asset-grid").innerHTML = fallbackAssets.map(([id, title]) => card({id, title})).join("");
+      });
+
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("/sw.js").catch(() => {});
+    }
+  </script>
+</body>
+</html>
