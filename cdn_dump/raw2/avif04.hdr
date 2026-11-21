@@ -1,0 +1,17 @@
+HTTP/2 200 
+server: nginx/1.31.3
+date: Sat, 21 Nov 2026 11:45:00 GMT
+content-type: image/avif
+content-length: 102761
+etag: "sha256-a05e7119bee15796bd78ee576d15c3dd"
+x-brandguard-region: eu-media-3
+x-content-type-options: nosniff
+cache-control: public, max-age=31536000, immutable, stale-if-error=86400
+vary: Accept
+age: 74213
+x-cache: HIT, HIT
+x-brandguard-variant: 2048w-avif
+x-asset-sanitized-metadata: true
+x-asset-pipeline: variant-resize/transcode/v9
+strict-transport-security: max-age=31536000
+
