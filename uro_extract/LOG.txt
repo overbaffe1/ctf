@@ -1,0 +1,472 @@
+== tools ==
+/usr/bin/7z
+/usr/bin/7za
+/usr/bin/unrar
+/usr/bin/unrar-free
+== listing мmmm ==
+
+7-Zip 26.00 (x64) : Copyright (c) 1999-2026 Igor Pavlov : 2026-02-12
+ 64-bit locale=C.UTF-8 Threads:4 OPEN_MAX:65536, ASM
+
+Scanning the drive for archives:
+1 file, 5310224 bytes (5186 KiB)
+
+Listing archive: мммм.rar
+
+--
+Path = мммм.rar
+Type = Rar5
+Physical Size = 5310224
+Characteristics = Locator QuickOpen:5309951
+Encrypted = -
+Solid = -
+Blocks = 8
+Method = v6:8M:m0:m3
+Multivolume = -
+Volumes = 1
+
+----------
+Path = station.img
+Folder = -
+Size = 128
+Packed Size = 13
+Modified = 2026-11-21 10:22:24.7762743
+Created = 
+Accessed = 
+Attributes = A
+Alternate Stream = -
+Encrypted = -
+Solid = -
+Split Before = -
+Split After = -
+CRC = C2A8FA9D
+Host OS = Windows
+Method = v6:m3:8M
+Characteristics = CRC Time:M
+Symbolic Link = 
+Hard Link = 
+Copy Link = 
+Volume Index = 
+Checksum = 
+NT Security = 
+
+Path = transmitter.exe
+Folder = -
+Size = 50688
+Packed Size = 23556
+Modified = 2026-11-21 10:22:21.9495471
+Created = 
+Accessed = 
+Attributes = A
+Alternate Stream = -
+Encrypted = -
+Solid = -
+Split Before = -
+Split After = -
+CRC = 06CBEE2B
+Host OS = Windows
+Method = v6:m3:8M
+Characteristics = CRC Time:M
+Symbolic Link = 
+Hard Link = 
+Copy Link = 
+Volume Index = 
+Checksum = 
+NT Security = 
+
+Path = file-6ee08a4efdea81d5-file.txt
+Folder = -
+Size = 3443
+Packed Size = 1513
+Modified = 2026-11-21 10:22:11.4355404
+Created = 
+Accessed = 
+Attributes = A
+Alternate Stream = -
+Encrypted = -
+Solid = -
+Split Before = -
+Split After = -
+CRC = 8A625CB3
+Host OS = Windows
+Method = v6:m3:8M
+Characteristics = CRC Time:M
+Symbolic Link = 
+Hard Link = 
+Copy Link = 
+Volume Index = 
+Checksum = 
+NT Security = 
+
+Path = file-027c8e5dc1728310-file.csv
+Folder = -
+Size = 229
+Packed Size = 169
+Modified = 2026-11-21 10:22:10.4794120
+Created = 
+Accessed = 
+Attributes = A
+Alternate Stream = -
+Encrypted = -
+Solid = -
+Split Before = -
+Split After = -
+CRC = 560D82E2
+Host OS = Windows
+Method = v6:m3:8M
+Characteristics = CRC Time:M
+Symbolic Link = 
+Hard Link = 
+Copy Link = 
+Volume Index = 
+Checksum = 
+NT Security = 
+
+Path = zhurnal.csv
+Folder = -
+Size = 5878889
+Packed Size = 962493
+Modified = 2026-11-21 10:22:09.5254340
+Created = 
+Accessed = 
+Attributes = A
+Alternate Stream = -
+Encrypted = -
+Solid = -
+Split Before = -
+Split After = -
+CRC = A4B83178
+Host OS = Windows
+Method = v6:m3:8M
+Characteristics = CRC Time:M
+Symbolic Link = 
+Hard Link = 
+Copy Link = 
+Volume Index = 
+Checksum = 
+NT Security = 
+
+Path = transmitter
+Folder = -
+Size = 34608
+Packed Size = 18611
+Modified = 2026-11-21 10:22:07.3818152
+Created = 
+Accessed = 
+Attributes = A
+Alternate Stream = -
+Encrypted = -
+Solid = -
+Split Before = -
+Split After = -
+CRC = 2E4BA415
+Host OS = Windows
+Method = v6:m3:8M
+Characteristics = CRC Time:M
+Symbolic Link = 
+Hard Link = 
+Copy Link = 
+Volume Index = 
+Checksum = 
+NT Security = 
+
+Path = board.bin
+Folder = -
+Size = 4303082
+Packed Size = 4303082
+Modified = 2026-11-21 10:22:05.6744015
+Created = 
+Accessed = 
+Attributes = A
+Alternate Stream = -
+Encrypted = -
+Solid = -
+Split Before = -
+Split After = -
+CRC = B18A0805
+Host OS = Windows
+Method = v6:m0:8M
+Characteristics = CRC Time:M
+Symbolic Link = 
+Hard Link = 
+Copy Link = 
+Volume Index = 
+Checksum = 
+NT Security = 
+
+Path = counter.rom
+Folder = -
+Size = 88
+Packed Size = 88
+Modified = 2026-11-21 10:22:05.8255230
+Created = 
+Accessed = 
+Attributes = A
+Alternate Stream = -
+Encrypted = -
+Solid = -
+Split Before = -
+Split After = -
+CRC = 5239238B
+Host OS = Windows
+Method = v6:m0:8M
+Characteristics = CRC Time:M
+Symbolic Link = 
+Hard Link = 
+Copy Link = 
+Volume Index = 
+Checksum = 
+NT Security = 
+
+== extract ==
+
+7-Zip 26.00 (x64) : Copyright (c) 1999-2026 Igor Pavlov : 2026-02-12
+ 64-bit locale=C.UTF-8 Threads:4 OPEN_MAX:65536, ASM
+
+Scanning the drive for archives:
+1 file, 5310224 bytes (5186 KiB)
+
+Extracting archive: мммм.rar
+--
+Path = мммм.rar
+Type = Rar5
+Physical Size = 5310224
+Characteristics = Locator QuickOpen:5309951
+Encrypted = -
+Solid = -
+Blocks = 8
+Method = v6:8M:m0:m3
+Multivolume = -
+Volumes = 1
+
+Everything is Ok
+
+Files: 8
+Size:       10271155
+Compressed: 5310224
+== fallback unrar ==
+
+UNRAR 7.20 freeware      Copyright (c) 1993-2026 Alexander Roshal
+
+Extracting from мммм.rar
+
+Extracting  uro_extract/mmmm/station.img                                   0%  OK 
+Extracting  uro_extract/mmmm/transmitter.exe                               0%  OK 
+Extracting  uro_extract/mmmm/file-6ee08a4efdea81d5-file.txt                0%  OK 
+Extracting  uro_extract/mmmm/file-027c8e5dc1728310-file.csv                0%  OK 
+Extracting  uro_extract/mmmm/zhurnal.csv                                  18%  OK 
+Extracting  uro_extract/mmmm/transmitter                                  18%  OK 
+Extracting  uro_extract/mmmm/board.bin                                    97% 99%  OK 
+Extracting  uro_extract/mmmm/counter.rom                                 100%  OK 
+All OK
+== fallback bsdtar ==
+/home/runner/work/_temp/29733316-1a7c-4603-930c-b77662f169b2.sh: line 13: bsdtar: command not found
+== result ==
+uro_extract/mmmm:
+total 10060
+drwxr-xr-x 2 runner runner    4096 Nov 21 14:52 .
+drwxr-xr-x 3 runner runner    4096 Nov 21 14:52 ..
+-rw-r--r-- 1 runner runner 4303082 Nov 21 10:22 board.bin
+-rw-r--r-- 1 runner runner      88 Nov 21 10:22 counter.rom
+-rw-r--r-- 1 runner runner     229 Nov 21 10:22 file-027c8e5dc1728310-file.csv
+-rw-r--r-- 1 runner runner    3443 Nov 21 10:22 file-6ee08a4efdea81d5-file.txt
+-rw-r--r-- 1 runner runner     128 Nov 21 10:22 station.img
+-rw-r--r-- 1 runner runner   34608 Nov 21 10:22 transmitter
+-rw-r--r-- 1 runner runner   50688 Nov 21 10:22 transmitter.exe
+-rw-r--r-- 1 runner runner 5878889 Nov 21 10:22 zhurnal.csv
+== БЕНs.part1.rar ==
+
+7-Zip 26.00 (x64) : Copyright (c) 1999-2026 Igor Pavlov : 2026-02-12
+ 64-bit locale=C.UTF-8 Threads:4 OPEN_MAX:65536, ASM
+
+Scanning the drive for archives:
+1 file, 16777216 bytes (16 MiB)
+
+Listing archive: БЕНs.part1.rar
+
+--
+Path = БЕНs.part1.rar
+Type = Rar5
+Physical Size = 16777216
+Total Physical Size = 44787853
+Characteristics = Volume Locator QuickOpen:16777114
+Encrypted = -
+Solid = -
+Blocks = 2
+Method = v6:32M:m0
+Multivolume = +
+Volume Index = 0
+Volumes = 3
+
+----------
+Path = files.7z
+Folder = -
+Size = 44787275
+Packed Size = 44787275
+Modified = 2026-11-21 10:34:14.9349081
+Created = 
+Accessed = 
+Attributes = A
+Alternate Stream = -
+Encrypted = -
+Solid = -
+Split Before = -
+Split After = -
+CRC = ECE6349A
+Host OS = Windows
+Method = v6:m0:128K
+Characteristics = CRC Time:M
+Symbolic Link = 
+Hard Link = 
+Copy Link = 
+Volume Index = 0
+Checksum = 
+NT Security = 
+
+Path = Текстовый документ (2).txt
+Folder = -
+Size = 0
+Packed Size = 0
+Modified = 2026-11-21 10:34:23.6831318
+Created = 
+Accessed = 
+Attributes = A
+Alternate Stream = -
+Encrypted = -
+Solid = -
+Split Before = -
+Split After = -
+CRC = 00000000
+Host OS = Windows
+Method = v6:m0:32M
+Characteristics = CRC Time:M
+Symbolic Link = 
+Hard Link = 
+Copy Link = 
+Volume Index = 2
+Checksum = 
+NT Security = 
+
+== тасs.part1.rar ==
+
+7-Zip 26.00 (x64) : Copyright (c) 1999-2026 Igor Pavlov : 2026-02-12
+ 64-bit locale=C.UTF-8 Threads:4 OPEN_MAX:65536, ASM
+
+Scanning the drive for archives:
+1 file, 15728640 bytes (15 MiB)
+
+Listing archive: тасs.part1.rar
+
+--
+Path = тасs.part1.rar
+Type = Rar5
+Physical Size = 15728640
+Total Physical Size = 24305174
+Characteristics = Volume Locator QuickOpen:15728538
+Encrypted = -
+Solid = -
+Blocks = 2
+Method = v6:32M:m0:m3
+Multivolume = +
+Volume Index = 0
+Volumes = 2
+
+----------
+Path = task.mp4
+Folder = -
+Size = 24285966
+Packed Size = 24304766
+Modified = 2026-11-21 10:48:18.4717496
+Created = 
+Accessed = 
+Attributes = A
+Alternate Stream = -
+Encrypted = -
+Solid = -
+Split Before = -
+Split After = -
+CRC = E7C6D434
+Host OS = Windows
+Method = v6:m3:32M
+Characteristics = CRC Time:M
+Symbolic Link = 
+Hard Link = 
+Copy Link = 
+Volume Index = 0
+Checksum = 
+NT Security = 
+
+Path = Текстовый документ (2).txt
+Folder = -
+Size = 0
+Packed Size = 0
+Modified = 2026-11-21 10:48:47.3435942
+Created = 
+Accessed = 
+Attributes = A
+Alternate Stream = -
+Encrypted = -
+Solid = -
+Split Before = -
+Split After = -
+CRC = 00000000
+Host OS = Windows
+Method = v6:m0:32M
+Characteristics = CRC Time:M
+Symbolic Link = 
+Hard Link = 
+Copy Link = 
+Volume Index = 1
+Checksum = 
+NT Security = 
+
+== Baby.part1.rar ==
+
+7-Zip 26.00 (x64) : Copyright (c) 1999-2026 Igor Pavlov : 2026-02-12
+ 64-bit locale=C.UTF-8 Threads:4 OPEN_MAX:65536, ASM
+
+Scanning the drive for archives:
+1 file, 15728640 bytes (15 MiB)
+
+Listing archive: Baby.part1.rar
+
+--
+Path = Baby.part1.rar
+Type = Rar5
+Physical Size = 15728640
+Total Physical Size = 27803053
+Characteristics = Volume Locator QuickOpen:15728538
+Encrypted = -
+Solid = -
+Blocks = 1
+Method = v6:32M:m3
+Multivolume = +
+Volume Index = 0
+Volumes = 2
+
+----------
+Path = Baby.exe
+Folder = -
+Size = 28253696
+Packed Size = 27802721
+Modified = 2026-11-21 09:09:21.0920742
+Created = 
+Accessed = 
+Attributes = A
+Alternate Stream = -
+Encrypted = -
+Solid = -
+Split Before = -
+Split After = -
+CRC = 26A8F9B3
+Host OS = Windows
+Method = v6:m3:32M
+Characteristics = CRC Time:M
+Symbolic Link = 
+Hard Link = 
+Copy Link = 
+Volume Index = 0
+Checksum = 
+NT Security = 
+
+SUCCESS
