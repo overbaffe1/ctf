@@ -1,0 +1,40 @@
+name: uro-extract2
+on:
+  push:
+    paths:
+      - '.github/workflows/uro_extract2.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: install tools
+        continue-on-error: true
+        run: |
+          sudo apt-get update -qq || true
+          sudo apt-get install -y -qq p7zip-full p7zip-rar unrar 2>&1 | tail -3 || true
+      - name: extract bens and list
+        continue-on-error: true
+        run: |
+          mkdir -p uro_extract/bens
+          : > uro_extract/BENS_LOG.txt
+          echo "== extract files.7z ==" >> uro_extract/BENS_LOG.txt
+          7z x -y -ouro_extract/bens "БЕНs.part1.rar" >> uro_extract/BENS_LOG.txt 2>&1 | tail -20
+          ls -la uro_extract/bens >> uro_extract/BENS_LOG.txt 2>&1
+          echo "== list files.7z ==" >> uro_extract/BENS_LOG.txt
+          7z l -slt uro_extract/bens/files.7z >> uro_extract/BENS_LOG.txt 2>&1 | grep -E "^(Path|Size|Packed Size|Modified|CRC) " >> uro_extract/BENS_LOG.txt
+          echo "== extract inner ==" >> uro_extract/BENS_LOG.txt
+          7z x -y -ouro_extract/bens/inner uro_extract/bens/files.7z >> uro_extract/BENS_LOG.txt 2>&1 | tail -10
+          ls -laR uro_extract/bens >> uro_extract/BENS_LOG.txt 2>&1
+          find uro_extract -type f -size +8M -delete
+      - name: commit
+        if: always()
+        run: |
+          git config user.name "cdn-bot"
+          git config user.email "cdn-bot@users.noreply.github.com"
+          git add -A uro_extract
+          git commit -m "bens extract" || echo nothing
+          git push || true
