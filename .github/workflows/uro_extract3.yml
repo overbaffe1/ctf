@@ -1,0 +1,33 @@
+name: uro-extract3
+on:
+  push:
+    paths:
+      - '.github/workflows/uro_extract3.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: install
+        continue-on-error: true
+        run: sudo apt-get update -qq || true
+      - name: extract small files
+        continue-on-error: true
+        run: |
+          mkdir -p l1
+          : > l1/ALUAN_LOG.txt
+          7z x -y -ol1 "БЕНs.part1.rar" >> l1/ALUAN_LOG.txt 2>&1 | tail -3
+          ls -la l1 >> l1/ALUAN_LOG.txt 2>&1
+          7z x -y -ol1/files l1/files.7z "files/aldan3.py" "files/coil.bin" "files/control.rom" "files/lenta.txt" "files/measure.bin" "files/repair.img" "files/restorer" "files/паспорт машины Алдан-3.txt" "files/restorer.exe" >> l1/ALUAN_LOG.txt 2>&1 | tail -20
+          ls -laR l1/files >> l1/ALUAN_LOG.txt 2>&1
+      - name: commit
+        if: always()
+        run: |
+          git config user.name "cdn-bot"
+          git config user.email "cdn-bot@users.noreply.github.com"
+          git add -A l1
+          git commit -m "aldan small files" || echo nothing
+          git push || true
