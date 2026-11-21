@@ -1,0 +1,48 @@
+name: m2race
+# Триггер push: workflow_dispatch требует файл на default branch, а push — нет.
+on:
+  push:
+    branches: ['arena/8a31cbb0-ctf']
+  workflow_dispatch:
+    inputs:
+      n:
+        description: 'сколько потоков в залпе'
+        required: false
+        default: ''
+
+concurrency:
+  group: m2race
+  cancel-in-progress: false
+
+jobs:
+  race:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: connectivity
+        run: |
+          echo "--- DNS ---"
+          getent hosts 4fc999215e4d4971.xn--80aqf1ad.xn--r1aee.xn--80afol2bmm.xn--p1acf || echo "DNS FAIL"
+          echo "--- curl page ---"
+          curl -s -o /dev/null -w 'http=%{http_code} tls=%{time_connect} total=%{time_total}\n' \
+            --max-time 20 \
+            'https://4fc999215e4d4971.xn--80aqf1ad.xn--r1aee.xn--80afol2bmm.xn--p1acf/' || echo "curl fail"
+
+      - name: race
+        env:
+          M2_BASE: 'https://4fc999215e4d4971.xn--80aqf1ad.xn--r1aee.xn--80afol2bmm.xn--p1acf'
+          PYTHONUNBUFFERED: '1'
+          INPUT_N: ${{ github.event.inputs.n }}
+        run: |
+          N="$INPUT_N"
+          [ -z "$N" ] && N="$(cat solvers/momentum2/N.txt 2>/dev/null || echo 60)"
+          echo "=== N=$N ==="
+          python3 solvers/momentum2/race.py "$N" 2>&1 | tee /tmp/out.txt
+          echo "=== SUMMARY ==="
+          grep -E 'available=|УСПЕШНЫХ|БАЛАНС|ФЛАГ|title=|имя .* профиле' /tmp/out.txt || true
