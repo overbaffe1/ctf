@@ -1,5 +1,7 @@
 name: m2race
 # Триггер push: workflow_dispatch требует файл на default branch, а push — нет.
+# Результат публикуется в issue: логи Actions лежат в blob.core.windows.net,
+# который из sandbox недоступен, а issues читаются через api.github.com.
 on:
   push:
     branches: ['arena/8a31cbb0-ctf']
@@ -9,6 +11,10 @@ on:
         description: 'сколько потоков в залпе'
         required: false
         default: ''
+
+permissions:
+  contents: read
+  issues: write
 
 concurrency:
   group: m2race
@@ -29,9 +35,9 @@ jobs:
         run: |
           echo "--- DNS ---"
           getent hosts 4fc999215e4d4971.xn--80aqf1ad.xn--r1aee.xn--80afol2bmm.xn--p1acf || echo "DNS FAIL"
-          echo "--- curl page ---"
-          curl -s -o /dev/null -w 'http=%{http_code} tls=%{time_connect} total=%{time_total}\n' \
-            --max-time 20 \
+          echo "--- curl ---"
+          curl -s -o /dev/null -w 'http=%{http_code} connect=%{time_connect} total=%{time_total}\n' \
+            --max-time 25 \
             'https://4fc999215e4d4971.xn--80aqf1ad.xn--r1aee.xn--80afol2bmm.xn--p1acf/' || echo "curl fail"
 
       - name: race
@@ -42,7 +48,27 @@ jobs:
         run: |
           N="$INPUT_N"
           [ -z "$N" ] && N="$(cat solvers/momentum2/N.txt 2>/dev/null || echo 60)"
-          echo "=== N=$N ==="
-          python3 solvers/momentum2/race.py "$N" 2>&1 | tee /tmp/out.txt
-          echo "=== SUMMARY ==="
-          grep -E 'available=|УСПЕШНЫХ|БАЛАНС|ФЛАГ|title=|имя .* профиле' /tmp/out.txt || true
+          {
+            echo "RUN $GITHUB_RUN_ID  N=$N"
+            echo
+            python3 -u solvers/momentum2/race.py "$N" 2>&1
+          } | tee /tmp/out.txt
+          exit 0
+
+      - name: publish
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          INPUT_N: ${{ github.event.inputs.n }}
+        run: |
+          N="$INPUT_N"; [ -z "$N" ] && N="$(cat solvers/momentum2/N.txt 2>/dev/null || echo 60)"
+          {
+            echo '## m2race run '"$GITHUB_RUN_ID"' (N='"$N"')'
+            echo
+            echo '```'
+            cat /tmp/out.txt
+            echo '```'
+          } > /tmp/body.md
+          gh issue create -R "$GITHUB_REPOSITORY" \
+            --title "m2race run $GITHUB_RUN_ID (N=$N)" \
+            --body-file /tmp/body.md
