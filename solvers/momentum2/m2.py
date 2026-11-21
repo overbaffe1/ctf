@@ -182,6 +182,50 @@ def sql_str(expr, label=""):
     return "".join(out)
 
 
+CHARSET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz_@|:-./"
+
+
+def sql_char_fast(expr, i):
+    """Символ через instr по алфавиту: ~6 запросов вместо ~18 на полный Unicode."""
+    idx = "instr('%s',substr(ifnull((%s),''),%d,1))" % (CHARSET, expr, i)
+    if not oracle("%s>=1" % idx):
+        return None
+    lo, hi = 1, len(CHARSET)
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        if oracle("%s>=%d" % (idx, mid)):
+            lo = mid
+        else:
+            hi = mid - 1
+    return CHARSET[lo - 1]
+
+
+def sql_str_fast(expr, label=""):
+    n = sql_len(expr)
+    if n is None:
+        return None
+    if n == 0:
+        return ""
+    out = []
+    for i in range(1, n + 1):
+        ch = sql_char_fast(expr, i)
+        if ch is None:
+            ch = sql_char_full(expr, i)
+        out.append(ch)
+    return "".join(out)
+
+
+def sql_char_full(expr, i):
+    lo, hi = 0, 0x2FFFF
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        if oracle("unicode(substr(ifnull((%s),''),%d,1))>=%d" % (expr, i, mid)):
+            lo = mid
+        else:
+            hi = mid - 1
+    return chr(lo)
+
+
 def sql_count(expr):
     lo, hi = 0, 200000
     while lo < hi:
@@ -202,7 +246,7 @@ def live_codes_fast():
     print("  живых строк: %s" % n)
     if not n or n < 1:
         return []
-    d = sql_str("SELECT group_concat(code||'@'||uses_left,'|') FROM promos WHERE uses_left>0", "live")
+    d = sql_str_fast("SELECT group_concat(code||'@'||uses_left,'|') FROM promos WHERE uses_left>0")
     out = []
     for part in (d or "").split("|"):
         if "@" in part:
