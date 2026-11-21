@@ -1,0 +1,73 @@
+name: cdn-dump6
+on:
+  push:
+    paths:
+      - '.github/workflows/cdn6.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  dump:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: fetch
+        run: |
+          BASE="https://c60f0a03899a4ea4.xn--80aqf1ad.xn--r1aee.xn--80afol2bmm.xn--p1acf"
+          UA="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36"
+          mkdir -p cdn_dump/probe6
+          : > cdn_dump/log6.txt
+          probe() {
+            code=$(curl -k -sS -L --max-time 15 -A "$UA" -H "Accept: */*" \
+              -o "cdn_dump/probe6/$1.bin" -D "cdn_dump/probe6/$1.hdr" \
+              -w '%{http_code} %{size_download} %{content_type}' "$BASE$2" 2>/dev/null || true)
+            echo "$1 $code $2" >> cdn_dump/log6.txt
+          }
+          for id in 04 17 23; do
+            probe p${id}_json       "/press-$id.json"
+            probe p${id}_assetjson  "/assets/press-$id.json"
+            probe p${id}_png        "/assets/press-$id.png"
+            probe p${id}_orig_png   "/originals/press-$id.png"
+            probe p${id}_zip        "/originals/press-$id.zip"
+            probe p${id}_export     "/export/press-$id"
+            probe p${id}_download   "/download/press-$id"
+            probe p${id}_meta       "/metadata/press-$id.json"
+            probe p${id}_railtxt    "/rail/press-$id"
+            probe p${id}_rail4      "/rails/press-$id"
+            probe p${id}_q64        "/image/press-$id?w=64"
+            probe p${id}_qf16       "/image/press-$id?format=png&w=640"
+            probe p${id}_qscale     "/image/press-$id?scale=1"
+            probe p${id}_qorig      "/image/press-$id?original=1"
+            probe p${id}_qv         "/image/press-$id?v=cc8d2db658ed"
+            probe p${id}_webp2048   "/image/press-$id?w=2048&format=webp"
+            probe p${id}_png2048    "/image/press-$id?w=2048&format=png"
+            probe p${id}_avif640    "/image/press-$id?w=640&format=avif"
+          done
+          probe manifest_root   "/manifest.json"
+          probe manifest_v1     "/manifest/v1"
+          probe apiv1           "/api/v1/assets"
+          probe apiv1_one       "/api/v1/assets/press-04"
+          probe healthz         "/healthz"
+          probe ready           "/ready"
+          probe static_js       "/static/app.js"
+          probe index_html      "/index.html"
+          probe sw2             "/service-worker.js"
+          probe bg_manifest     "/brandguard-manifest.json"
+          probe robots2         "/robots"
+          probe wp              "/wordpress"
+          probe rail_profile    "/rail/profile"
+          probe profile_json    "/profile.json"
+          probe pipeline        "/pipeline"
+          probe pipeline_json   "/pipeline.json"
+          probe dam             "/dam"
+          probe dam_press       "/dam/press-04"
+          probe xml             "/sitemap"
+          probe sitemap_index   "/sitemap_index.xml"
+          cat cdn_dump/log6.txt
+      - name: commit
+        run: |
+          git config user.name "cdn-bot"
+          git config user.email "cdn-bot@users.noreply.github.com"
+          git add -A cdn_dump
+          git commit -m "cdn dump6" || echo nothing
+          git push
