@@ -1,0 +1,12 @@
+HTTP/2 200 
+server: nginx/1.31.3
+date: Sat, 21 Nov 2026 12:58:35 GMT
+content-type: application/rdf+xml; charset=utf-8
+content-length: 515
+etag: "sha256-055fbd5ff536a78ede768c84efa1cddb"
+x-brandguard-region: eu-media-3
+x-content-type-options: nosniff
+cache-control: public, max-age=86400
+x-brandguard-metadata: sanitized-sidecar
+strict-transport-security: max-age=31536000
+

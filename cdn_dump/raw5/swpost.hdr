@@ -1,0 +1,11 @@
+HTTP/2 200 
+server: nginx/1.31.3
+date: Sat, 21 Nov 2026 12:58:20 GMT
+content-type: application/javascript; charset=utf-8
+content-length: 831
+etag: "sha256-959eeae53d50ce3dba9901545b456040"
+x-brandguard-region: eu-media-3
+x-content-type-options: nosniff
+cache-control: no-cache
+strict-transport-security: max-age=31536000
+

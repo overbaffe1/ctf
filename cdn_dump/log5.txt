@@ -1,0 +1,15 @@
+swpost 200 831 application/javascript; charset=utf-8 https://c60f0a03899a4ea4.xn--80aqf1ad.xn--r1aee.xn--80afol2bmm.xn--p1acf/sw.js
+manifestv2 200 4316 application/json; charset=utf-8 https://c60f0a03899a4ea4.xn--80aqf1ad.xn--r1aee.xn--80afol2bmm.xn--p1acf/asset-manifest.json?v=2
+orig17 200 1535111 image/png https://c60f0a03899a4ea4.xn--80aqf1ad.xn--r1aee.xn--80afol2bmm.xn--p1acf/originals/press-17
+orig23 200 297149 image/png https://c60f0a03899a4ea4.xn--80aqf1ad.xn--r1aee.xn--80afol2bmm.xn--p1acf/originals/press-23
+img04png 200 366073 image/png https://c60f0a03899a4ea4.xn--80aqf1ad.xn--r1aee.xn--80afol2bmm.xn--p1acf/image/press-04?w=640&format=png
+img04noquery 200 24070 image/webp https://c60f0a03899a4ea4.xn--80aqf1ad.xn--r1aee.xn--80afol2bmm.xn--p1acf/image/press-04
+img17noquery 200 70412 image/webp https://c60f0a03899a4ea4.xn--80aqf1ad.xn--r1aee.xn--80afol2bmm.xn--p1acf/image/press-17
+img23noquery 200 17964 image/webp https://c60f0a03899a4ea4.xn--80aqf1ad.xn--r1aee.xn--80afol2bmm.xn--p1acf/image/press-23
+img17avif 200 237253 image/avif https://c60f0a03899a4ea4.xn--80aqf1ad.xn--r1aee.xn--80afol2bmm.xn--p1acf/image/press-17?w=2048&format=avif
+img04avif 200 102761 image/avif https://c60f0a03899a4ea4.xn--80aqf1ad.xn--r1aee.xn--80afol2bmm.xn--p1acf/image/press-04?w=2048&format=avif
+xmp04 200 514 application/rdf+xml; charset=utf-8 https://c60f0a03899a4ea4.xn--80aqf1ad.xn--r1aee.xn--80afol2bmm.xn--p1acf/metadata/press-04.xmp
+xmp17 200 515 application/rdf+xml; charset=utf-8 https://c60f0a03899a4ea4.xn--80aqf1ad.xn--r1aee.xn--80afol2bmm.xn--p1acf/metadata/press-17.xmp
+xmp23 200 512 application/rdf+xml; charset=utf-8 https://c60f0a03899a4ea4.xn--80aqf1ad.xn--r1aee.xn--80afol2bmm.xn--p1acf/metadata/press-23.xmp
+orig04head 200 686191 image/png https://c60f0a03899a4ea4.xn--80aqf1ad.xn--r1aee.xn--80afol2bmm.xn--p1acf/originals/press-04?v=cc8d2db658ed
+favicon 404 27 application/json; charset=utf-8 https://c60f0a03899a4ea4.xn--80aqf1ad.xn--r1aee.xn--80afol2bmm.xn--p1acf/favicon.ico
