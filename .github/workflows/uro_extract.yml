@@ -1,0 +1,49 @@
+name: uro-extract
+on:
+  push:
+    paths:
+      - '.github/workflows/uro_extract.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: install tools
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq p7zip-full p7zip-rar unrar-free || sudo apt-get install -y -qq p7zip-full
+      - name: extract
+        run: |
+          mkdir -p uro_extract
+          : > uro_extract/LOG.txt
+          echo "== binaries ==" >> uro_extract/LOG.txt
+          (command -v 7z; command -v 7za; command -v unrar; command -v unrar-free; command -v rar) >> uro_extract/LOG.txt 2>&1
+          for a in "мммм.rar" "БЕНs.part1.rar" "тасs.part1.rar" "Baby.part1.rar"; do
+            echo "===== $a =====" >> uro_extract/LOG.txt
+            7z l -slt "$a" >> uro_extract/LOG.txt 2>&1 || true
+          done
+          mkdir -p uro_extract/mmmm
+          7z x -y -ouro_extract/mmmm "мммм.rar" >> uro_extract/LOG.txt 2>&1 || unrar x -o+ "мммм.rar" uro_extract/mmmm/ >> uro_extract/LOG.txt 2>&1 || true
+          ls -laR uro_extract/mmmm >> uro_extract/LOG.txt 2>&1 || true
+          mkdir -p uro_extract/bens
+          7z x -y -ouro_extract/bens "БЕНs.part1.rar" >> uro_extract/LOG.txt 2>&1 || true
+          ls -la uro_extract/bens >> uro_extract/LOG.txt 2>&1 || true
+          # list the inner 7z too
+          7z l -slt uro_extract/bens/files.7z >> uro_extract/LOG.txt 2>&1 || true
+          mkdir -p uro_extract/tass
+          7z x -y -ouro_extract/tass "тасs.part1.rar" >> uro_extract/LOG.txt 2>&1 || true
+          ls -la uro_extract/tass >> uro_extract/LOG.txt 2>&1 || true
+          mkdir -p uro_extract/baby
+          7z x -y -ouro_extract/baby "Baby.part1.rar" >> uro_extract/LOG.txt 2>&1 || true
+          ls -la uro_extract/baby >> uro_extract/LOG.txt 2>&1 || true
+          # keep small artifacts, drop huge binaries
+          find uro_extract -type f -size +12M -delete
+          du -sh uro_extract; find uro_extract -type f | head -40
+      - name: commit
+        run: |
+          git config user.name "cdn-bot"
+          git config user.email "cdn-bot@users.noreply.github.com"
+          git add -A uro_extract
+          git commit -m "uro extract" || echo nothing
+          git push
