@@ -1,0 +1,44 @@
+q_proof-of-work 503 2518 text/html /proof-of-work
+q_pow 503 2518 text/html /pow
+q_challenge 503 2518 text/html /challenge
+q_task 503 2518 text/html /task
+q_solve 503 2518 text/html /solve
+q_solution 503 2518 text/html /solution
+q_README 503 2518 text/html /README
+q_readme_txt 503 2518 text/html /readme.txt
+q_VERSION 503 2518 text/html /VERSION
+q_CHANGELOG 503 2518 text/html /CHANGELOG
+q__git_HEAD 503 2518 text/html /.git/HEAD
+q__git_config 503 2518 text/html /.git/config
+q__svn_entries 503 2518 text/html /.svn/entries
+q_flag_txt 503 2518 text/html /flag.txt
+q_FLAG 503 2518 text/html /FLAG
+q_flag_  /flag{
+q__  /}
+q__originals_press-04_flag 503 2518 text/html //originals/press-04/flag
+q_image_press-04_flag 503 2518 text/html /image/press-04/flag
+q_originals_press-04_txt 503 2518 text/html /originals/press-04.txt
+q_originals_press-04_json 503 2518 text/html /originals/press-04.json
+q_rail_txt 503 2518 text/html /rail.txt
+q_rails_txt 503 2518 text/html /rails.txt
+q_rail_json 503 2518 text/html /rail.json
+q__manifest 503 2518 text/html //manifest
+q_originals_press-04_sha256 503 2518 text/html /originals/press-04.sha256
+q_originals_press-04_md5 503 2518 text/html /originals/press-04.md5
+q_press-04 503 2518 text/html /press-04
+q_originals_ 503 2518 text/html /originals/
+q_press-04_flag 503 2518 text/html /press-04.flag
+q_originals_flag 503 2518 text/html /originals/flag
+q_originals_flag_txt 503 2518 text/html /originals/flag.txt
+q_flag_png 503 2518 text/html /flag.png
+q_flag_jpg 503 2518 text/html /flag.jpg
+q_brandguard 503 2518 text/html /brandguard
+q_brandguard_txt 503 2518 text/html /brandguard.txt
+q_info 503 2518 text/html /info
+q_status_json 503 2518 text/html /status.json
+a_api_assets 503 2518 text/html /api/assets
+a_assets_json 503 2518 text/html /assets.json
+a___api 503 2518 text/html /__api
+a_assets_press-04_meta 503 2518 text/html /assets/press-04/meta
+root2 000 0  https://c60f0a03899a4ea4.xn--80aqf1ad.xn--r1aee.xn--80afol2bmm.xn--p1acf/
+manifest2 000 0  https://c60f0a03899a4ea4.xn--80aqf1ad.xn--r1aee.xn--80afol2bmm.xn--p1acf/asset-manifest.json
