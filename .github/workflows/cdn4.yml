@@ -1,0 +1,74 @@
+name: cdn-dump4
+on:
+  push:
+    paths:
+      - '.github/workflows/cdn4.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  dump:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: fetch
+        run: |
+          BASE="https://c60f0a03899a4ea4.xn--80aqf1ad.xn--r1aee.xn--80afol2bmm.xn--p1acf"
+          UA="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36"
+          mkdir -p cdn_dump/raw4
+          : > cdn_dump/log4.txt
+          get() {
+            code=$(curl -k -sS -L --max-time 25 -A "$UA" -H "Accept: */*" \
+              -D "cdn_dump/raw4/$1.hdr" -o "cdn_dump/raw4/$1.bin" -w '%{http_code} %{size_download} %{content_type}' "$2" 2>>cdn_dump/log4.txt)
+            echo "$1 $code $2" >> cdn_dump/log4.txt
+          }
+          head() {
+            code=$(curl -k -sS -I -L --max-time 25 -A "$UA" -D "cdn_dump/raw4/$1.hdr" -o /dev/null -w '%{http_code} %{size_download} %{content_type}' "$2" 2>>cdn_dump/log4.txt)
+            echo "HEAD $1 $code $2" >> cdn_dump/log4.txt
+          }
+          get manifest "$BASE/asset-manifest.json"
+          get root "$BASE/"
+          head hroot "$BASE/"
+          get press24 "$BASE/image/press-24?w=640&format=webp"
+          get press00 "$BASE/image/press-00?w=640&format=webp"
+          get press04_32 "$BASE/image/press-04?w=32&format=png"
+          get press04_64 "$BASE/image/press-04?w=64&format=png"
+          get press04_128 "$BASE/image/press-04?w=128&format=png"
+          get press04_256 "$BASE/image/press-04?w=256&format=png"
+          get press04_512 "$BASE/image/press-04?w=512&format=png"
+          get press04_1024 "$BASE/image/press-04?w=1024&format=png"
+          get orig_status "$BASE/originals/press-04"
+          get manifest_v "$BASE/asset-manifest.json?v=cc8d2db658ed"
+          get admin_press "$BASE/admin/press-04"
+          get debug_manifest "$BASE/debug/asset-manifest.json"
+          get internal "$BASE/internal"
+          get .well-known "$BASE/.well-known/security.txt"
+          get sourcemap "$BASE/sw.js.map"
+          get appjs "$BASE/app.js"
+          get mainjs "$BASE/main.js"
+          get missing_meta "$BASE/metadata/press-24.xmp"
+          get cache "$BASE/cache"
+          get purge "$BASE/purge"
+          get metrics "$BASE/metrics"
+          get status "$BASE/status"
+          get version "$BASE/version"
+          get api "$BASE/api"
+          get images "$BASE/images"
+          get meta_press04_png "$BASE/metadata/press-04.png"
+          get export "$BASE/export"
+          get download "$BASE/download"
+          get backup "$BASE/backup"
+          get assets "$BASE/assets"
+          get rails "$BASE/rails"
+          get rail "$BASE/rail"
+          get press04_txt "$BASE/image/press-04?w=640&format=txt"
+          get press04_svg "$BASE/image/press-04?w=640&format=svg"
+          get press04_json "$BASE/image/press-04?w=640&format=json"
+          cat cdn_dump/log4.txt
+      - name: commit
+        run: |
+          git config user.name "cdn-bot"
+          git config user.email "cdn-bot@users.noreply.github.com"
+          git add -A cdn_dump
+          git commit -m "cdn dump4" || echo nothing
+          git push
