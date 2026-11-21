@@ -1,0 +1,12 @@
+root 503 2518 text/html /
+orig04raw 503 2518 text/html /originals/press-04?raw=1
+orig04b 503 2518 text/html /originals/press-04.png
+img1024 503 2518 text/html /image/press-04?w=1024&format=png
+img1024w 503 2518 text/html /image/press-04?w=1024&format=webp
+xmp_raw 503 2518 text/html /metadata/press-17.xmp?raw=1
+head_orig 503 2518 text/html /originals/press-04
+any32 503 2518 text/html /image/press-32
+any99 503 2518 text/html /image/press-99
+any 503 2518 text/html /originals/press-24
+webp_full 503 2518 text/html /image/press-04?format=webp
+avif1024 503 2518 text/html /image/press-04?w=1024&format=avif
