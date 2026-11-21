@@ -1,0 +1,44 @@
+name: cdn-dump10
+on:
+  push:
+    paths:
+      - '.github/workflows/cdn10.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  dump:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: fetch
+        run: |
+          BASE="https://c60f0a03899a4ea4.xn--80aqf1ad.xn--r1aee.xn--80afol2bmm.xn--p1acf"
+          UA="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36"
+          mkdir -p cdn_dump/probe10
+          : > cdn_dump/log10.txt
+          probe() {
+            code=$(curl -k -sS -L --max-time 20 -A "$UA" -o "cdn_dump/probe10/$1.bin" -D "cdn_dump/probe10/$1.hdr" \
+              -w '%{http_code} %{size_download} %{content_type}' "$BASE$2" 2>/dev/null || true)
+            echo "$1 $code $2" >> cdn_dump/log10.txt
+          }
+          probe root "/"
+          probe orig04raw "/originals/press-04?raw=1"
+          probe orig04b "/originals/press-04.png"
+          probe img1024 "/image/press-04?w=1024&format=png"
+          probe img1024w "/image/press-04?w=1024&format=webp"
+          probe xmp_raw "/metadata/press-17.xmp?raw=1"
+          probe head_orig "/originals/press-04" 
+          probe any32 "/image/press-32"
+          probe any99 "/image/press-99"
+          probe any "/originals/press-24"
+          probe webp_full "/image/press-04?format=webp"
+          probe avif1024 "/image/press-04?w=1024&format=avif"
+          cat cdn_dump/log10.txt
+      - name: commit
+        run: |
+          git config user.name "cdn-bot"
+          git config user.email "cdn-bot@users.noreply.github.com"
+          git add -A cdn_dump
+          git commit -m "cdn dump10" || echo nothing
+          git push
