@@ -1,0 +1,163 @@
+== extract files.7z ==
+
+7-Zip 26.00 (x64) : Copyright (c) 1999-2026 Igor Pavlov : 2026-02-12
+ 64-bit locale=C.UTF-8 Threads:4 OPEN_MAX:65536, ASM
+
+Scanning the drive for archives:
+1 file, 16777216 bytes (16 MiB)
+
+Extracting archive: БЕНs.part1.rar
+--
+Path = БЕНs.part1.rar
+Type = Rar5
+Physical Size = 16777216
+Total Physical Size = 44787853
+Characteristics = Volume Locator QuickOpen:16777114
+Encrypted = -
+Solid = -
+Blocks = 2
+Method = v6:32M:m0
+Multivolume = +
+Volume Index = 0
+Volumes = 3
+
+Everything is Ok
+
+Files: 2
+Size:       44787275
+Compressed: 44787853
+total 43748
+drwxr-xr-x 2 runner runner     4096 Nov 21 14:59 .
+drwxr-xr-x 4 runner runner     4096 Nov 21 14:59 ..
+-rw-r--r-- 1 runner runner 44787275 Nov 21 10:34 files.7z
+-rw-r--r-- 1 runner runner        0 Nov 21 10:34 Текстовый документ (2).txt
+== list files.7z ==
+
+7-Zip 26.00 (x64) : Copyright (c) 1999-2026 Igor Pavlov : 2026-02-12
+ 64-bit locale=C.UTF-8 Threads:4 OPEN_MAX:65536, ASM
+
+Scanning the drive for archives:
+1 file, 44787275 bytes (43 MiB)
+
+Listing archive: uro_extract/bens/files.7z
+
+--
+Path = uro_extract/bens/files.7z
+Type = 7z
+Physical Size = 44787275
+Headers Size = 422
+Method = LZMA2:25 BCJ
+Solid = +
+Blocks = 2
+
+----------
+Path = files
+Size = 0
+Packed Size = 0
+Modified = 2026-11-19 11:24:10.3743522
+Attributes = D
+CRC = 
+Encrypted = -
+Method = 
+Block = 
+
+Path = files/aldan3.py
+Size = 2135
+Packed Size = 44770137
+Modified = 2026-11-19 00:00:41.1106852
+Attributes = A
+CRC = 97D0B666
+Encrypted = -
+Method = LZMA2:25
+Block = 0
+
+Path = files/coil.bin
+Size = 592
+Packed Size = 
+Modified = 2026-11-19 00:06:18.4884380
+Attributes = A
+CRC = AB726E90
+Encrypted = -
+Method = LZMA2:25
+Block = 0
+
+Path = files/control.rom
+Size = 4864
+Packed Size = 
+Modified = 2026-11-19 00:17:02.8036265
+Attributes = A
+CRC = 415A7573
+Encrypted = -
+Method = LZMA2:25
+Block = 0
+
+Path = files/lenta.txt
+Size = 3054
+Packed Size = 
+Modified = 2026-11-19 00:16:54.3312000
+Attributes = A
+CRC = D1E2119A
+Encrypted = -
+Method = LZMA2:25
+Block = 0
+
+Path = files/measure.bin
+Size = 768
+Packed Size = 
+Modified = 2026-11-19 00:06:18.4884380
+Attributes = A
+CRC = D4F5D074
+Encrypted = -
+Method = LZMA2:25
+Block = 0
+
+Path = files/repair.img
+Size = 512
+Packed Size = 
+Modified = 2026-11-19 00:06:18.4932598
+Attributes = A
+CRC = B2AA7578
+Encrypted = -
+Method = LZMA2:25
+Block = 0
+
+Path = files/restorer
+Size = 35784
+Packed Size = 
+Modified = 2026-11-19 00:17:03.9669022
+Attributes = A
+CRC = B5B98470
+Encrypted = -
+Method = LZMA2:25
+Block = 0
+
+Path = files/spool.bin
+Size = 44740047
+Packed Size = 
+Modified = 2026-11-19 01:30:25.4352909
+Attributes = A
+CRC = 0CE358C3
+Encrypted = -
+Method = LZMA2:25
+Block = 0
+
+Path = files/паспорт машины Алдан-3.txt
+Size = 2944
+Packed Size = 
+Modified = 2026-11-19 00:17:02.8046243
+Attributes = A
+CRC = C03D9CFB
+Encrypted = -
+Method = LZMA2:25
+Block = 0
+
+Path = files/restorer.exe
+Size = 40448
+Packed Size = 16716
+Modified = 2026-11-19 00:17:03.1494208
+Attributes = A
+CRC = 7CE34D91
+Encrypted = -
+Method = BCJ LZMA2:25
+Block = 1
+
