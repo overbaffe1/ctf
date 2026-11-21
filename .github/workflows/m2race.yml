@@ -51,7 +51,7 @@ jobs:
           {
             echo "RUN $GITHUB_RUN_ID  N=$N"
             echo
-            python3 -u solvers/momentum2/race.py "$N" 2>&1
+            python3 -u solvers/momentum2/auto.py "$N" 2>&1
           } | tee /tmp/out.txt
           exit 0
 
