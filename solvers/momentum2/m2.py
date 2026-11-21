@@ -39,6 +39,41 @@ UA = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chr
 
 COOKIE = ""
 LOCK = threading.Lock()
+ACC_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "account.json")
+
+
+def save_account(user):
+    try:
+        with open(ACC_FILE, "w", encoding="utf-8") as f:
+            json.dump({"user": user, "pass": PASS, "cookie": COOKIE}, f)
+    except Exception:
+        pass
+
+
+def load_account():
+    global COOKIE
+    try:
+        with open(ACC_FILE, encoding="utf-8") as f:
+            a = json.load(f)
+        COOKIE = a.get("cookie") or ""
+        return a.get("user"), a.get("pass") or PASS
+    except Exception:
+        return None, PASS
+
+
+def login_saved(user, pw):
+    """Вход в уже существующий аккаунт (не создавать новый!)."""
+    global COOKIE
+    COOKIE = ""
+    req("GET", "/logout")
+    st, raw = req("POST", "/login", {"username": user, "password": pw})
+    _, prof = req("GET", "/profile")
+    ok = user in js(prof)
+    print("  вход %s -> %s | в профиле: %s | баланс %d ₽"
+          % (user, st, "ДА" if ok else "НЕТ", balance()))
+    if ok:
+        save_account(user)
+    return ok
 
 
 # --------------------------------------------------------------- утилиты
@@ -327,6 +362,7 @@ def fresh_account():
     _, raw = req("GET", "/profile")
     print("  аккаунт %s | имя в профиле: %s | баланс %d ₽"
           % (user, "ДА" if user in js(raw) else "НЕ НАЙДЕНО", balance()))
+    save_account(user)
     return user
 
 
@@ -402,7 +438,7 @@ def volley(n, code):
 
 # --------------------------------------------------------------- гринд
 
-def grind(threads=32, seconds=4200):
+def grind(threads=32, seconds=4200, ignore_target=False):
     """amount=1, multiplier=1.01 -> +1 ₽ за сделку. Keep-alive на поток."""
     start_bal = balance()
     print("=" * 70)
@@ -439,7 +475,7 @@ def grind(threads=32, seconds=4200):
                     e = j.get("error") or plain(d)[:60]
                     with errlock:
                         stats["err"][e] = stats["err"].get(e, 0) + 1
-                    if any(w in str(e).lower() for w in ("средств", "войдите", "баланс")):
+                    if any(w in str(e).lower() for w in ("средств", "войдите", "баланс", "сумма")):
                         stop.set()
                     time.sleep(0.05)
                     continue
@@ -452,7 +488,7 @@ def grind(threads=32, seconds=4200):
                         b //= 100
                         if b > peak["v"]:
                             peak["v"] = b
-                        if b >= TARGET_RUB:
+                        if b >= TARGET_RUB and not ignore_target:
                             stop.set()
                         if b < peak["v"] - 5000:
                             print("  !! просадка: %d ₽ при пике %d ₽ — стоп" % (b, peak["v"]))
@@ -479,7 +515,7 @@ def grind(threads=32, seconds=4200):
             top = sorted(stats["err"].items(), key=lambda x: -x[1])[:2]
             print("       ошибки: %s" % top)
         sys.stdout.flush()
-        if b >= TARGET_RUB:
+        if b >= TARGET_RUB and not ignore_target:
             stop.set()
     stop.set()
     for t in ts:
@@ -510,28 +546,73 @@ def main():
     n = next((int(a) for a in args if a.isdigit()), 60)
     print("BASE = %s\nрежим = %s\n" % (BASE, mode))
 
+    if mode == "login":
+        target = next((a for a in args[1:] if not a.isdigit() and a != "login"), "")
+        if not target:
+            u, pw = load_account()
+            target = u
+        if not target:
+            print("нужно имя: python3 m2.py login <username>")
+            return
+        login_saved(target, PASS)
+        return
+
     if mode in ("probe",):
         dump_db(quick=False)
         return
 
     if mode == "grind":
-        fresh_account()
+        ensure_account()
         b = grind(threads=32)
         if b >= TARGET_RUB:
             buy()
         return
 
+    keep = "keep" in args or os.environ.get("M2_KEEP") == "1"
+
+    def ensure_account():
+        if keep:
+            u, pw = load_account()
+            if not u:
+                print("  !! нет сохранённого аккаунта — создаю новый")
+                return fresh_account()
+            login_saved(u, pw)
+            return u
+        return fresh_account()
+
     if mode == "rate":
-        fresh_account()
-        print("замер: 20 с гриндa на 32 keep-alive потоках\n")
+        ensure_account()
         b0 = balance()
-        grind(threads=32, seconds=20)
+        if b0 < 10:
+            print("  !! на аккаунте %d ₽ — нечем ставить. Сначала промокод:" % b0)
+            print("     python3 m2.py redeem")
+            return
+        threads = next((int(a) for a in args if a.isdigit()), 32)
+        print("замер: 15 с гриндa на %d keep-alive потоках\n" % threads)
+        grind(threads=threads, seconds=15, ignore_target=True)
         b1 = balance()
         print("\nитог замера: %d -> %d ₽ (дельта %d ₽)" % (b0, b1, b1 - b0))
         return
 
+    if mode == "redeem":
+        u = ensure_account()
+        codes = [c for c, _ in live_codes_fast()]
+        for c in codes or [os.environ.get("M2_CODE", "")]:
+            if not c:
+                continue
+            st, raw = req("POST", "/promo/redeem", {"code": c})
+            d = js(raw)
+            print("  redeem %s -> %s %s" % (c, st, plain(d)[:90]))
+            if '"credited"' in d:
+                break
+        b = balance()
+        print("  баланс: %d ₽" % b)
+        if b >= TARGET_RUB:
+            buy()
+        return
+
     if mode == "race":
-        fresh_account()
+        ensure_account()
         hits, credited, errs = volley(n, os.environ.get("M2_CODE", "0OKVRCRTKC"))
         print("  начислений %d/%d | +%.0f ₽" % (hits, n, credited / 100))
         for k, v in sorted(errs.items(), key=lambda x: -x[1])[:4]:
