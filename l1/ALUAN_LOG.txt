@@ -1,0 +1,74 @@
+
+7-Zip 26.00 (x64) : Copyright (c) 1999-2026 Igor Pavlov : 2026-02-12
+ 64-bit locale=C.UTF-8 Threads:4 OPEN_MAX:65536, ASM
+
+Scanning the drive for archives:
+1 file, 16777216 bytes (16 MiB)
+
+Extracting archive: БЕНs.part1.rar
+--
+Path = БЕНs.part1.rar
+Type = Rar5
+Physical Size = 16777216
+Total Physical Size = 44787853
+Characteristics = Volume Locator QuickOpen:16777114
+Encrypted = -
+Solid = -
+Blocks = 2
+Method = v6:32M:m0
+Multivolume = +
+Volume Index = 0
+Volumes = 3
+
+Everything is Ok
+
+Files: 2
+Size:       44787275
+Compressed: 44787853
+total 43752
+drwxr-xr-x 2 runner runner     4096 Nov 21 15:01 .
+drwxr-xr-x 8 runner runner     4096 Nov 21 15:01 ..
+-rw-r--r-- 1 runner runner      545 Nov 21 15:01 ALUAN_LOG.txt
+-rw-r--r-- 1 runner runner 44787275 Nov 21 10:34 files.7z
+-rw-r--r-- 1 runner runner        0 Nov 21 10:34 Текстовый документ (2).txt
+
+7-Zip 26.00 (x64) : Copyright (c) 1999-2026 Igor Pavlov : 2026-02-12
+ 64-bit locale=C.UTF-8 Threads:4 OPEN_MAX:65536, ASM
+
+Scanning the drive for archives:
+1 file, 44787275 bytes (43 MiB)
+
+Extracting archive: l1/files.7z
+--
+Path = l1/files.7z
+Type = 7z
+Physical Size = 44787275
+Headers Size = 422
+Method = LZMA2:25 BCJ
+Solid = +
+Blocks = 2
+
+Everything is Ok
+
+Files: 10
+Size:       44831148
+Compressed: 44787275
+l1/files:
+total 12
+drwxr-xr-x 3 runner runner 4096 Nov 21 15:01 .
+drwxr-xr-x 3 runner runner 4096 Nov 21 15:01 ..
+drwxr-xr-x 2 runner runner 4096 Nov 21 15:01 files
+
+l1/files/files:
+total 116
+drwxr-xr-x 2 runner runner  4096 Nov 21 15:01 .
+drwxr-xr-x 3 runner runner  4096 Nov 21 15:01 ..
+-rw-r--r-- 1 runner runner  2135 Nov 19 00:00 aldan3.py
+-rw-r--r-- 1 runner runner   592 Nov 19 00:06 coil.bin
+-rw-r--r-- 1 runner runner  4864 Nov 19 00:17 control.rom
+-rw-r--r-- 1 runner runner  3054 Nov 19 00:16 lenta.txt
+-rw-r--r-- 1 runner runner   768 Nov 19 00:06 measure.bin
+-rw-r--r-- 1 runner runner   512 Nov 19 00:06 repair.img
+-rw-r--r-- 1 runner runner 35784 Nov 19 00:17 restorer
+-rw-r--r-- 1 runner runner 40448 Nov 19 00:17 restorer.exe
+-rw-r--r-- 1 runner runner  2944 Nov 19 00:17 паспорт машины Алдан-3.txt
