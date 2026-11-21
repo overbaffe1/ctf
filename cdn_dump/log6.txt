@@ -1,0 +1,74 @@
+p04_json 404 27 application/json; charset=utf-8 /press-04.json
+p04_assetjson 404 27 application/json; charset=utf-8 /assets/press-04.json
+p04_png 404 27 application/json; charset=utf-8 /assets/press-04.png
+p04_orig_png 404 27 application/json; charset=utf-8 /originals/press-04.png
+p04_zip 404 27 application/json; charset=utf-8 /originals/press-04.zip
+p04_export 404 27 application/json; charset=utf-8 /export/press-04
+p04_download 404 27 application/json; charset=utf-8 /download/press-04
+p04_meta 404 27 application/json; charset=utf-8 /metadata/press-04.json
+p04_railtxt 404 27 application/json; charset=utf-8 /rail/press-04
+p04_rail4 404 27 application/json; charset=utf-8 /rails/press-04
+p04_q64 404 27 application/json; charset=utf-8 /image/press-04?w=64
+p04_qf16 200 366073 image/png /image/press-04?format=png&w=640
+p04_qscale 200 24070 image/webp /image/press-04?scale=1
+p04_qorig 200 24070 image/webp /image/press-04?original=1
+p04_qv 200 24070 image/webp /image/press-04?v=cc8d2db658ed
+p04_webp2048 404 27 application/json; charset=utf-8 /image/press-04?w=2048&format=webp
+p04_png2048 200 1978671 image/png /image/press-04?w=2048&format=png
+p04_avif640 404 27 application/json; charset=utf-8 /image/press-04?w=640&format=avif
+p17_json 404 27 application/json; charset=utf-8 /press-17.json
+p17_assetjson 404 27 application/json; charset=utf-8 /assets/press-17.json
+p17_png 404 27 application/json; charset=utf-8 /assets/press-17.png
+p17_orig_png 404 27 application/json; charset=utf-8 /originals/press-17.png
+p17_zip 404 27 application/json; charset=utf-8 /originals/press-17.zip
+p17_export 404 27 application/json; charset=utf-8 /export/press-17
+p17_download 404 27 application/json; charset=utf-8 /download/press-17
+p17_meta 404 27 application/json; charset=utf-8 /metadata/press-17.json
+p17_railtxt 404 27 application/json; charset=utf-8 /rail/press-17
+p17_rail4 404 27 application/json; charset=utf-8 /rails/press-17
+p17_q64 404 27 application/json; charset=utf-8 /image/press-17?w=64
+p17_qf16 200 693136 image/png /image/press-17?format=png&w=640
+p17_qscale 200 70412 image/webp /image/press-17?scale=1
+p17_qorig 200 70412 image/webp /image/press-17?original=1
+p17_qv 200 70412 image/webp /image/press-17?v=cc8d2db658ed
+p17_webp2048 404 27 application/json; charset=utf-8 /image/press-17?w=2048&format=webp
+p17_png2048 200 4556321 image/png /image/press-17?w=2048&format=png
+p17_avif640 404 27 application/json; charset=utf-8 /image/press-17?w=640&format=avif
+p23_json 404 27 application/json; charset=utf-8 /press-23.json
+p23_assetjson 404 27 application/json; charset=utf-8 /assets/press-23.json
+p23_png 404 27 application/json; charset=utf-8 /assets/press-23.png
+p23_orig_png 404 27 application/json; charset=utf-8 /originals/press-23.png
+p23_zip 404 27 application/json; charset=utf-8 /originals/press-23.zip
+p23_export 404 27 application/json; charset=utf-8 /export/press-23
+p23_download 404 27 application/json; charset=utf-8 /download/press-23
+p23_meta 404 27 application/json; charset=utf-8 /metadata/press-23.json
+p23_railtxt 404 27 application/json; charset=utf-8 /rail/press-23
+p23_rail4 404 27 application/json; charset=utf-8 /rails/press-23
+p23_q64 404 27 application/json; charset=utf-8 /image/press-23?w=64
+p23_qf16 200 200593 image/png /image/press-23?format=png&w=640
+p23_qscale 200 17964 image/webp /image/press-23?scale=1
+p23_qorig 200 17964 image/webp /image/press-23?original=1
+p23_qv 200 17964 image/webp /image/press-23?v=cc8d2db658ed
+p23_webp2048 404 27 application/json; charset=utf-8 /image/press-23?w=2048&format=webp
+p23_png2048 200 949776 image/png /image/press-23?w=2048&format=png
+p23_avif640 404 27 application/json; charset=utf-8 /image/press-23?w=640&format=avif
+manifest_root 404 27 application/json; charset=utf-8 /manifest.json
+manifest_v1 404 27 application/json; charset=utf-8 /manifest/v1
+apiv1 404 27 application/json; charset=utf-8 /api/v1/assets
+apiv1_one 404 27 application/json; charset=utf-8 /api/v1/assets/press-04
+healthz 404 27 application/json; charset=utf-8 /healthz
+ready 404 27 application/json; charset=utf-8 /ready
+static_js 404 27 application/json; charset=utf-8 /static/app.js
+index_html 404 27 application/json; charset=utf-8 /index.html
+sw2 404 27 application/json; charset=utf-8 /service-worker.js
+bg_manifest 404 27 application/json; charset=utf-8 /brandguard-manifest.json
+robots2 404 27 application/json; charset=utf-8 /robots
+wp 404 27 application/json; charset=utf-8 /wordpress
+rail_profile 404 27 application/json; charset=utf-8 /rail/profile
+profile_json 404 27 application/json; charset=utf-8 /profile.json
+pipeline 404 27 application/json; charset=utf-8 /pipeline
+pipeline_json 404 27 application/json; charset=utf-8 /pipeline.json
+dam 404 27 application/json; charset=utf-8 /dam
+dam_press 404 27 application/json; charset=utf-8 /dam/press-04
+xml 404 27 application/json; charset=utf-8 /sitemap
+sitemap_index 404 27 application/json; charset=utf-8 /sitemap_index.xml

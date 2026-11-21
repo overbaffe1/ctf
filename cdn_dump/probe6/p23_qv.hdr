@@ -1,0 +1,17 @@
+HTTP/2 200 
+server: nginx/1.31.3
+date: Sat, 21 Nov 2026 13:10:15 GMT
+content-type: image/webp
+content-length: 17964
+etag: "sha256-e3384cb9fd5c9e8447ad37627f38aeaa"
+x-brandguard-region: eu-media-3
+x-content-type-options: nosniff
+cache-control: public, max-age=31536000, immutable, stale-if-error=86400
+vary: Accept
+age: 74213
+x-cache: HIT, HIT
+x-brandguard-variant: 640w-webp
+x-asset-sanitized-metadata: true
+x-asset-pipeline: variant-resize/transcode/v9
+strict-transport-security: max-age=31536000
+

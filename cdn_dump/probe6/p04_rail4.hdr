@@ -1,0 +1,11 @@
+HTTP/2 404 
+server: nginx/1.31.3
+date: Sat, 21 Nov 2026 13:09:39 GMT
+content-type: application/json; charset=utf-8
+content-length: 27
+etag: "sha256-ddd7f46534d5243547b7120544ba626c"
+x-brandguard-region: eu-media-3
+x-content-type-options: nosniff
+cache-control: no-store
+strict-transport-security: max-age=31536000
+
