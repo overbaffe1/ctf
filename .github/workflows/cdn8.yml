@@ -1,0 +1,52 @@
+name: cdn-dump8
+on:
+  push:
+    paths:
+      - '.github/workflows/cdn8.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  dump:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: fetch
+        run: |
+          BASE="https://c60f0a03899a4ea4.xn--80aqf1ad.xn--r1aee.xn--80afol2bmm.xn--p1acf"
+          UA="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36"
+          mkdir -p cdn_dump/probe8
+          : > cdn_dump/log8.txt
+          probe() {
+            code=$(curl -k -sS -L --max-time 15 -A "$UA" -H "Accept: */*" \
+              -o "cdn_dump/probe8/$1.bin" -D "cdn_dump/probe8/$1.hdr" \
+              -w '%{http_code} %{size_download} %{content_type}' "$BASE$2" 2>/dev/null || true)
+            echo "$1 $code $2" >> cdn_dump/log8.txt
+          }
+          for p in proof-of-work pow challenge task solve solution README readme.txt \
+                   VERSION CHANGELOG .git/HEAD .git/config .svn/entries \
+                   flag.txt FLAG flag{ } /originals/press-04/flag \
+                   image/press-04/flag originals/press-04.txt originals/press-04.json \
+                   rail.txt rails.txt rail.json /manifest originals/press-04.sha256 \
+                   originals/press-04.md5 press-04 originals/ press-04.flag \
+                   originals/flag originals/flag.txt flag.png flag.jpg \
+                   brandguard brandguard.txt info status.json; do
+            n=$(echo "$p" | tr '/.{ }' '______')
+            probe "q_$n" "/$p"
+          done
+          # check if there's a workers/edge API
+          for p in api/assets assets.json __api assets/press-04/meta; do
+            n=$(echo "$p" | tr '/.' '__')
+            probe "a_$n" "/$p"
+          done
+          # hostname-based sanity + main site
+          probe root2 "$BASE/"
+          probe manifest2 "$BASE/asset-manifest.json"
+          cat cdn_dump/log8.txt
+      - name: commit
+        run: |
+          git config user.name "cdn-bot"
+          git config user.email "cdn-bot@users.noreply.github.com"
+          git add -A cdn_dump
+          git commit -m "cdn dump8" || echo nothing
+          git push
