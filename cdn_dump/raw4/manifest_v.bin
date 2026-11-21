@@ -1,0 +1,133 @@
+{
+  "product": "BrandGuard CDN",
+  "manifest_version": "2026.06.rail.4",
+  "cache": {
+    "policy": "public, max-age=31536000, immutable",
+    "service_worker": "/sw.js"
+  },
+  "assets": [
+    {
+      "id": "press-04",
+      "title": "Northstar launch card",
+      "status": "published",
+      "rights": "press-kit-worldwide",
+      "metadata": {
+        "sanitized": true,
+        "icc": "sRGB IEC61966-2.1",
+        "xmp_sidecar": "/metadata/press-04.xmp",
+        "review": "no visible watermark drift"
+      },
+      "variants": [
+        {
+          "url": "/image/press-04?w=640&format=webp&v=5d2421957372",
+          "width": 640,
+          "format": "webp",
+          "bytes": 24070,
+          "sha256": "5d24219573722e735282e99ad0b34be78856631f99d62ea1697b4fd4df43d859",
+          "pipeline": "variant-resize/transcode/v9"
+        },
+        {
+          "url": "/image/press-04?w=2048&format=avif&v=a05e7119bee1",
+          "width": 2048,
+          "format": "avif",
+          "bytes": 102761,
+          "sha256": "a05e7119bee15796bd78ee576d15c3dd2fe3571d150c51c19f0372494db022c2",
+          "pipeline": "variant-resize/transcode/v9"
+        }
+      ],
+      "original": {
+        "url": "/originals/press-04?v=cc8d2db658ed",
+        "format": "png",
+        "bytes": 686191,
+        "sha256": "cc8d2db658ed687514977418ba9f4923c3bf48ec99158bff4e130988c857cf84",
+        "pipeline": "dam-import/original-retention/v4"
+      },
+      "audit": {
+        "perceptual_hash_cluster": "bg-press-kit-2026-06",
+        "pipeline_hash": "matched"
+      }
+    },
+    {
+      "id": "press-17",
+      "title": "Channel partner shield",
+      "status": "published",
+      "rights": "press-kit-worldwide",
+      "metadata": {
+        "sanitized": true,
+        "icc": "sRGB IEC61966-2.1",
+        "xmp_sidecar": "/metadata/press-17.xmp",
+        "review": "no visible watermark drift"
+      },
+      "variants": [
+        {
+          "url": "/image/press-17?w=640&format=webp&v=61b7610ed775",
+          "width": 640,
+          "format": "webp",
+          "bytes": 70412,
+          "sha256": "61b7610ed775090cc161eba124e9908420179c53960a405eaef5b5e6e0d68a42",
+          "pipeline": "variant-resize/transcode/v9"
+        },
+        {
+          "url": "/image/press-17?w=2048&format=avif&v=4b10aa143469",
+          "width": 2048,
+          "format": "avif",
+          "bytes": 237253,
+          "sha256": "4b10aa14346914149f3d540ef8fceeae00147698b61879c627fa1f6160213cc7",
+          "pipeline": "variant-resize/transcode/v9"
+        }
+      ],
+      "original": {
+        "url": "/originals/press-17?v=b0b8b6757e16",
+        "format": "png",
+        "bytes": 1535111,
+        "sha256": "b0b8b6757e16ec6297a0b01d279fd5412c2db517b5d06f1856b4f587fedd6ed6",
+        "pipeline": "dam-import/original-retention/v4"
+      },
+      "audit": {
+        "perceptual_hash_cluster": "bg-press-kit-2026-06",
+        "pipeline_hash": "review-required"
+      }
+    },
+    {
+      "id": "press-23",
+      "title": "Retail media banner",
+      "status": "published",
+      "rights": "press-kit-worldwide",
+      "metadata": {
+        "sanitized": true,
+        "icc": "sRGB IEC61966-2.1",
+        "xmp_sidecar": "/metadata/press-23.xmp",
+        "review": "no visible watermark drift"
+      },
+      "variants": [
+        {
+          "url": "/image/press-23?w=640&format=webp&v=e3384cb9fd5c",
+          "width": 640,
+          "format": "webp",
+          "bytes": 17964,
+          "sha256": "e3384cb9fd5c9e8447ad37627f38aeaa4e58a57eff47760c4d9804237380c3a0",
+          "pipeline": "variant-resize/transcode/v9"
+        },
+        {
+          "url": "/image/press-23?w=2048&format=avif&v=d72fdee4bee0",
+          "width": 2048,
+          "format": "avif",
+          "bytes": 82095,
+          "sha256": "d72fdee4bee0a9499868eb0d3dc441b2097199df3b21660256a23bcb1ec6fcf9",
+          "pipeline": "variant-resize/transcode/v9"
+        }
+      ],
+      "original": {
+        "url": "/originals/press-23?v=ec7d80ad89bf",
+        "format": "png",
+        "bytes": 297149,
+        "sha256": "ec7d80ad89bf7d41827759f71a145918c69e8306c16e1b0761a6d74e213c9383",
+        "pipeline": "dam-import/original-retention/v4"
+      },
+      "audit": {
+        "perceptual_hash_cluster": "bg-press-kit-2026-06",
+        "pipeline_hash": "matched"
+      }
+    }
+  ]
+}
