@@ -1,39 +1,38 @@
-# Physics Clicker — снять проверку лицензии Steam
+# Physics Clicker — запуск без лицензии Steam
 
-## Что в папке
-- `steam_api64_patched.dll` — оригинальная валвовская `steam_api64.dll` (x64, 1054 экспорта, 317 080 байт)
-  с вырезанными проверками лицензии. Остальные 72 байта файла идентичны оригиналу.
-- `patch_dll.py` — тот же патч в виде скрипта (позволяет пересобрать на любой версии dll).
-- `triage.py` — осмотр папки игры: флаги, Steam-признаки, PE-заголовки.
+## Быстрый ответ
 
-## Что именно пропатчено (по именам экспортов, RVA → файловое смещение)
-| экспорт | было | стало |
-|---|---|---|
-| `SteamAPI_RestartAppIfNecessary` | `push rbp; push rbx; ...` | `xor eax,eax; ret` (0) |
-| `SteamAPI_ISteamApps_BIsSubscribedApp` | `mov rax,[rcx]; jmp [rax+0x30]` | `mov eax,1; ret` |
-| `SteamAPI_ISteamApps_BIsSubscribed` | трамплин | `mov eax,1; ret` |
-| `SteamAPI_ISteamApps_BIsAppInstalled` | трамплин | `mov eax,1; ret` |
-| `SteamAPI_ISteamApps_BIsDlcInstalled` | трамплин | `mov eax,1; ret` |
-| `SteamAPI_ISteamApps_BIsSubscribedFromFamilySharing` | трамплин | `mov eax,1; ret` |
-| `SteamAPI_ISteamApps_BIsTimedTrial` | трамплин | `xor eax,eax; ret` (0) |
-| `SteamAPI_ISteamApps_BIsVACBanned` | трамплин | `xor eax,eax; ret` (0) |
-| `SteamAPI_ISteamApps_BIsCybercafe` | трамплин | `xor eax,eax; ret` (0) |
-| `SteamAPI_ISteamApps_BIsLowViolence` | трамплин | `xor eax,eax; ret` (0) |
-| `SteamAPI_ISteamApps_BIsSubscribedFromFreeWeekend` | трамплин | `xor eax,eax; ret` (0) |
-| `SteamAPI_ISteamApps_GetEarliestPurchaseUnixTime` | трамплин | `mov eax,1577836800; ret` (2020-01-01) |
+**Удали `steam_api64.dll` из папки игры.** Мотор (GacUI/KlayGE-подобный, `config.json` с `uuid`, `core.src`/`main.src`)
+грузит Steam **опционально**: `PC.exe` импортирует `SteamInternal_SteamAPI_Init`, но сам решает, звать ли его.
+`SteamAPI_RestartAppIfNecessary` тоже вызывается только если Steam вообще поднялся.
 
-Проверено: 72 изменённых байта, все внутри `.text`, PE валиден, таблица экспортов цела.
+Без dll игра идёт по «пиратской» ветке: лицензия считается отсутствующей, и именно там она просит
+активацию. Мой патченный `steam_api64.dll` держит инициализацию успешной, и игра уходит в ветку
+«лицензия есть», где ждёт настоящий Steam-клиент — отсюда мгновенное закрытие.
 
-## Установка
-1. Закрыть игру.
-2. В папке с exe: `steam_api64.dll` → `steam_api64.dll.orig` (на случай отката).
-3. Положить `steam_api64_patched.dll` рядом и переименовать в `steam_api64.dll`.
-4. Запускать exe **напрямую**, Steam запускать не нужно.
+## Готовая папка
 
-## Важно
-Если игра всё равно просит лицензию — значит проверка идёт не через `steam_api64.dll`,
-а внутри монетизации Unity (`UnityEngine.Purchasing` / `Steamworks.NET` в `Assembly-CSharp.dll`),
-либо через Steam DRM-обёртку (`SteamDRMP.dll`). Тогда:
-- для DRM — снять обёртку Steamless (`atom0s/Steamless`);
-- для проверки внутри управляемого кода — смотреть `*_Data/Managed/Assembly-CSharp.dll`
-  через dnSpy/ILSpy и искать `BIsSubscribedApp` / `SteamApps`.
+`game/` — распакованная игра **без** `steam_api64.dll`:
+
+```
+PC.exe  config.json  core.src  main.src  d3dcompiler_47.dll  xaudio2_9redist.dll
+```
+
+Скачай `game/` и запусти `PC.exe`. Если всё равно закрывается — верни dll из `game_with_dll/`
+(там лежит оригинальная валвовская, не патченная).
+
+## Что было проверено на файлах (без запуска)
+
+- `PC.exe` — x64, подсистема GUI, импортирует из `steam_api64.dll` только:
+  `SteamAPI_Init`, `SteamInternal_SteamAPI_Init`, `SteamAPI_RestartAppIfNecessary`,
+  `SteamAPI_GetHSteamUser`, `SteamAPI_RunCallbacks`, `Register/UnregisterCallback`,
+  `Register/UnregisterCallResult`, `FindOrCreateUserInterface`, `ContextInit`, `Shutdown`.
+  **Ни одного `ISteamApps_*`** — прямых вызовов проверки подписки из exe нет.
+- `engine.log` содержит только строку про старт логгера → процесс успел инициализироваться и упал позже.
+- `steam_api64.dll` (317 080 байт, 1054 экспорта) — оригинальная валвовская.
+
+## Если понадобится патчить dll
+
+`patch_dll.py` заменяет 12 экспортов (`BIsSubscribedApp` → 1, `RestartAppIfNecessary` → 0 и т.д.).
+Готовый файл: `steam_api64_patched.dll`. Но, судя по импортам exe, игра его не спрашивает —
+поэтому основной путь это **удалить dll**, а не патчить.
