@@ -11,8 +11,8 @@
  * остаток до 250 000 и сколько ждать. На цели сам вызывает /profile/buy.
  */
 (() => {
-  if (window.FARM && window.FARM.__v === 3) {
-    console.log('%cFARM уже загружен, версия 3', 'color:#0a0');
+  if (window.FARM && window.FARM.__v === 4) {
+    console.log('%cFARM уже загружен, версия 4', 'color:#0a0');
     return;
   }
 
@@ -21,7 +21,7 @@
   const sleep = ms => new Promise(r => setTimeout(r, ms));
 
   const S = {
-    __v: 3,
+    __v: 4,
     running: false,
     stop: false,
     started: 0,
@@ -70,7 +70,7 @@
     const eta = (rps > 0.05 && left !== null) ? left / rps : null;
 
     let txt =
-      (S.running ? '▶ ФАРМ ИДЁТ' : '■ остановлен') + '   v3\n' +
+      (S.running ? '▶ ФАРМ ИДЁТ' : '■ остановлен') + '   v4\n' +
       `время      ${hhmmss(el)}\n` +
       `сделок     ${S.trades}   (${rps.toFixed(1)} в сек)\n` +
       `выигрышей  ${S.wins}\n` +
@@ -168,7 +168,7 @@
   // ---------- публичный интерфейс ----------
 
   const FARM = {
-    __v: 3,
+    __v: 4,
 
     async start(opts = {}) {
       if (S.running) { console.log('уже идёт, сначала FARM.stop()'); return; }
@@ -180,7 +180,7 @@
         errors: {}, flags: [], startedTip: '',
       });
       await refreshBalance();
-      console.log(`%cFARM v3 старт: ${workers} потоков, пауза ${pause} мс, баланс ${S.balance} ₽`,
+      console.log(`%cFARM v4 старт: ${workers} потоков, пауза ${pause} мс, баланс ${S.balance} ₽`,
                   'color:#0a0;font-weight:bold');
       if ((S.balance || 0) < 1) {
         S.startedTip = '⚠ на счету нет денег — нужен аккаунт с промокодом';
@@ -234,6 +234,6 @@
   };
 
   window.FARM = FARM;
-  console.log('%cFARM v3 загружен. FARM.start() — начать, FARM.stop() — стоп, FARM.status() — цифры.',
+  console.log('%cFARM v4 загружен. FARM.start() — начать, FARM.stop() — стоп, FARM.status() — цифры.',
               'color:#0a0;font-weight:bold');
 })();

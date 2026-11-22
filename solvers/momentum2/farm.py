@@ -23,6 +23,8 @@ import time
 import random
 import string
 import ssl
+import gzip
+import zlib
 import threading
 import http.client
 import urllib.parse
@@ -249,14 +251,27 @@ def worker(stop, st, pause):
     body = urllib.parse.urlencode({"asset": "RUB/USD", "direction": "up",
                                    "amount": "1", "multiplier": "1.01"})
     hdr = {"Host": HOST, "Content-Type": "application/x-www-form-urlencoded",
-           "Cookie": COOKIE, "User-Agent": UA, "Accept": "*/*"}
+           "Cookie": COOKIE, "User-Agent": UA, "Accept": "*/*",
+           "Accept-Encoding": "gzip, deflate"}
     while not stop.is_set():
         try:
             if c.sock is None:
                 c.connect()
             c.request("POST", "/trade", body=body, headers=hdr)
             r = c.getresponse()
-            d = r.read().decode("utf-8", "replace")
+            rawb = r.read()
+            enc = (r.getheader("Content-Encoding") or "").lower()
+            if enc == "gzip":
+                try:
+                    rawb = gzip.decompress(rawb)
+                except Exception:
+                    pass
+            elif enc == "deflate":
+                try:
+                    rawb = zlib.decompress(rawb, -zlib.MAX_WBITS)
+                except Exception:
+                    pass
+            d = rawb.decode("utf-8", "replace")
             try:
                 j = json.loads(uesc(d))
             except Exception:
